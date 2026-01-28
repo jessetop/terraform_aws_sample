@@ -31,6 +31,12 @@ resource "random_string" "bucket_suffix" {
   upper   = false
 }
 
+# Get the latest Python solution stack
+data "aws_elastic_beanstalk_solution_stack" "python" {
+  most_recent = true
+  name_regex  = "^64bit Amazon Linux 2023 v.* running Python 3.11$"
+}
+
 # Elastic Beanstalk Application
 resource "aws_elastic_beanstalk_application" "app" {
   name        = var.app_name
@@ -47,7 +53,7 @@ resource "aws_elastic_beanstalk_application" "app" {
 resource "aws_elastic_beanstalk_environment" "env" {
   name                = "${var.app_name}-${var.environment}"
   application         = aws_elastic_beanstalk_application.app.name
-  solution_stack_name = var.solution_stack_name
+  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.python.name
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"

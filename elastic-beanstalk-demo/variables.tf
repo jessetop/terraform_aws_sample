@@ -19,7 +19,7 @@ variable "environment" {
 variable "solution_stack_name" {
   description = "Elastic Beanstalk solution stack name"
   type        = string
-  default     = "64bit Amazon Linux 2023 v4.0.11 running Python 3.11"
+  default     = "64bit Amazon Linux 2023 v4.9.1 running Python 3.11"
 }
 
 variable "instance_type" {
